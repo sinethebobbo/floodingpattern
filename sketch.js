@@ -144,7 +144,7 @@ function rebuildVisual() {
       let t = j / 11;
       let col = lerpColor(color(chooseColor[1]), color(chooseColor[0]), t);
 
-      if (rectWidth > 200) col = chooseColor[0];
+      if (rectWidth > 220) col = chooseColor[0];
       else if (rectWidth > 170) col = chooseColor[1];
       else if (rectWidth > 100) col = chooseColor[2];
       else if (rectWidth > 50) col = chooseColor[3];
