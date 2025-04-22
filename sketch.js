@@ -1,7 +1,3 @@
-git init
-git add .
-git commit -m "Initial commit"
-
 
 let water;
 let prompt = 10;
