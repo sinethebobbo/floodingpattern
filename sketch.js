@@ -7,9 +7,11 @@ let colors2 = ["#a03f95", "#ba56a3", "#DA8EE7", "#8BC34A", "#C4DDBD"];
 let colors3 = ["#FF4E20", "#f5bbfa", "#FFCAFA", "#C2D968", "#AACDFE"];
 let userColor = colors3;
 let buttonsDiv;
+let fabricTexture;
 
 function preload() {
   water = loadJSON("water.json");
+  fabricTexture = loadImage("fabric_tex.jpeg");
 }
 
 function setup() {
@@ -70,6 +72,9 @@ function draw() {
       pattern.show();
     }
   }
+  tint(255, 20); // 40 is transparency level (0–255)
+  image(fabricTexture, 0, 0, width, height);
+  noTint();
 }
 
 function change_color(colorIn) {
@@ -143,12 +148,21 @@ function rebuildVisual() {
       let chooseColor = userColor;
       let t = j / 11;
       let col = lerpColor(color(chooseColor[1]), color(chooseColor[0]), t);
-
-      if (rectWidth > 220) col = chooseColor[0];
-      else if (rectWidth > 170) col = chooseColor[1];
-      else if (rectWidth > 100) col = chooseColor[2];
+      /*
+      if (rectWidth > 370) col = chooseColor[0];
+      else if (rectWidth > 200) col = chooseColor[1];
+      else if (rectWidth > 150) col = chooseColor[2];
       else if (rectWidth > 50) col = chooseColor[3];
       else col = chooseColor[4];
+      */
+
+      if (accu > 750) col = chooseColor[0];
+      else if (accu > 500) col = chooseColor[1];
+      else if (accu > 400) col = chooseColor[2];
+      else if (accu > 200) col = chooseColor[3];
+      else col = chooseColor[4];
+
+
 
       let monthName = getMonthName(j);
       yearData.patterns.push(new Pattern(x, y, rectWidth, rectHeight, accu, col, monthName, yearData.year));
@@ -203,7 +217,8 @@ class Pattern {
     push();
     fill(this.hovered ? lerpColor(color(this.col), color(255), 0.4) : this.col);
     stroke(this.hovered ? 'black' : 'none');
-    strokeWeight(1);
+    //strokeWeight(1);
+    noStroke();
     rect(this.x, this.y, this.data, this.s);
     rect(this.x + 20, this.y + this.s, this.data, this.s);
     rect(this.x + 40, this.y + this.s * 2, this.data, this.s);
