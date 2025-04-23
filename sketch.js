@@ -3,7 +3,7 @@ let water;
 let prompt = 10;
 let years = [];
 let colors1 = ["#273987", "#4290c9", "#6AE6F7", "#a67155", "#6b381d"];
-let colors2 = ["#a03f95", "#ba56a3", "#DA8EE7", "#8BC34A", "#C4DDBD"];
+let colors2 = ["#91076d", "#c24ca4", "#DA8EE7", "#8BC34A", "#C4DDBD"];
 let colors3 = ["#FF4E20", "#f5bbfa", "#FFCAFA", "#C2D968", "#AACDFE"];
 let userColor = colors3;
 let buttonsDiv;
@@ -63,7 +63,7 @@ function draw() {
   background('#fcf9eb');
 
   for (let year of years) {
-    // Draw background color for the year row
+
     fill(year.backgroundColor);
     rect(0, year.y, width, year.patterns[0].s * 3);
 
@@ -72,7 +72,7 @@ function draw() {
       pattern.show();
     }
   }
-  tint(255, 20); // 40 is transparency level (0–255)
+  tint(255, 20); 
   image(fabricTexture, 0, 0, width, height);
   noTint();
 }
@@ -93,11 +93,9 @@ function rebuildVisual() {
   let bottomMargin = 30;
   let visualHeight = height - topMargin - bottomMargin;
 
-  // Get selected years and total accumulation
   let selectedYears = water.years.slice(0, prompt);
   let totalAccumulate = selectedYears.reduce((sum, y) => sum + Number(y.accumulate), 0);
 
-  // Precompute proportional heights and line spacing
   let rowData = selectedYears.map((yearData) => {
     let acc = Number(yearData.accumulate);
     let proportion = acc / totalAccumulate;
@@ -105,12 +103,11 @@ function rebuildVisual() {
       yearData,
       proportion,
       accumulate: acc,
-      lineCount: 0, // we'll calculate this next
+      lineCount: 0,
       lineHeight: 3,
     };
   });
 
-  // First pass to compute line counts and space needed
   let totalProportion = 0;
   let totalOrangeSpace = 0;
   rowData.forEach(row => {
@@ -126,7 +123,6 @@ function rebuildVisual() {
     totalProportion += row.proportion;
   });
 
-  // Now, recalculate available height minus total orange line space
   let usableHeight = visualHeight - totalOrangeSpace;
   let y = topMargin;
 
@@ -169,14 +165,10 @@ function rebuildVisual() {
       x += rectWidth + 5;
     }
 
-    // Push y down by row height + orange line space
     let orangeLineSpace = row.lineCount * row.lineHeight + 10;
     y += rowHeight + orangeLineSpace;
   }
 }
-
-
-
 
 
 function getBackgroundColor(colors) {
